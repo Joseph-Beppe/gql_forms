@@ -116,7 +116,6 @@ async def graphiql(request: Request):
 
 # Implementation of SLI collection with prometheus python client.
 from prometheus_client import start_http_server, Counter, Histogram
-from random import uniform # devel only
 import time
 
 HISTOGRAM = Histogram('request_latency_seconds', 'Latency created by processing request')
@@ -208,5 +207,8 @@ if not DEMO:
     assert JWTRESOLVEUSERPATHURL is not None, "JWTRESOLVEUSERPATHURL environment variable must be explicitly defined"
 
 # Generate some requests for SLO.
+from random import uniform
 while True:
-    apollo_gql_slo_dummy(uniform(0, 4.9))
+    rand_time = uniform(0, 4.9)
+    apollo_gql_slo_dummy(rand_time)
+    time.sleep(rand_time * 2)
